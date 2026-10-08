@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Achievement Reviver - Restore Xbox Achievements in Minecraft Bedrock</title>
+    <meta name="description" content="Fix locked achievements in Minecraft Bedrock Edition. Drop your .mcworld, .zip, or level.dat and get a patched world in seconds — 100% in your browser.">
+    <link rel="icon" type="image/x-icon" href="logo.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/mediaqueries.css">
+    <link rel="stylesheet" href="css/reviver-chunker.css">
+
+    <!-- Local JSZip engine -->
+    <script src="js/jszip.min.js"></script>
+
+    <!-- Client-side Controller -->
+    <script type="module" src="js/reviver.js"></script>
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header id="header">
+        <div class="wrapper">
+            <div class="header_inner">
+                <a href="#" class="logo_wrap" data-view="revive">
+                    <h1 class="logo_title">Achievement Reviver</h1>
+                    <span class="edition_badge">Bedrock Edition</span>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active" data-view="revive">Revive World</a></li>
+                        <li><a href="#how-it-works" data-view="how-it-works">How It Works</a></li>
+                        <li><a href="#import-guide" data-view="import-guide">Import Guide</a></li>
+                        <li><a href="#faq" data-view="faq">FAQ</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Intro Section -->
+    <div class="hero_intro">
+        <h1>Restore Achievements in One Click.</h1>
+        <p>Accidentally switched to Creative or turned on cheats? Fix your world's achievement eligibility and get back to earning — no uploads, no accounts, nothing leaves your computer.</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="wrapper">
+        <main id="content">
+
+            <!-- 4-Stage Hexagonal Step Indicator -->
+            <div class="progress" aria-label="Progress steps">
+                <svg viewBox="0 0 420 89">
+                    <path class="bg"
+                          d="M 37.5 0 L 75 21 L 75 29 L 115 29 L 115 21 L 152.5 0 L 190 21 L 190 29 L 230 29 L 230 21 L 267.5 0 L 305 21 L 305 29 L 345 29 L 345 21 L 382.5 0 L 420 21 L 420 67 L 382.5 89 L 345 67 L 345 59 L 305 59 L 305 67 L 267.5 89 L 230 67 L 230 59 L 190 59 L 190 67 L 152.5 89 L 115 67 L 115 59 L 75 59 L 75 67 L 37.5 89 L 0 67 L 0 21"></path>
+                    
+                    <!-- STEP 1: Upload (Hopper) -->
+                    <g class="step1 complete" id="chunker-step1">
+                        <path class="hex" d="M 37.5 7 L 70 26 L 70 63 L 37.5 82 L 5 63 L 5 26 L 37.5 7"></path>
+                        <path class="shadow" d="M 5 26 L 5 63 L 37.5 82 L 70 63 L 70 57 L 37.5 76 L 10 60 L 10 23"></path>
+                        <path class="highlight" d="M 5 26 L 37.5 7 L 70 26 L 70 63 L 65 66 L 65 29 L 37.5 13 L 5 32"></path>
+                        <path class="corner1" d="M 5 26 L 10 23 L 10 29 L 5 32"></path>
+                        <path class="corner2" d="M 65 60 L 70 57 L 70 63 L 65 66"></path>
+                        <image href="images/hopper.png" x="21" y="28" height="30px" width="32px"/>
+                    </g>
+
+                    <!-- STEP 2: Inspect NBT (Command Block) -->
+                    <g class="step2" id="chunker-step2">
+                        <path class="hex" d="M 37.5 7 L 70 26 L 70 63 L 37.5 82 L 5 63 L 5 26 L 37.5 7"></path>
+                        <path class="shadow" d="M 5 26 L 5 63 L 37.5 82 L 70 63 L 70 57 L 37.5 76 L 10 60 L 10 23"></path>
+                        <path class="highlight" d="M 5 26 L 37.5 7 L 70 26 L 70 63 L 65 66 L 65 29 L 37.5 13 L 5 32"></path>
+                        <path class="corner1" d="M 5 26 L 10 23 L 10 29 L 5 32"></path>
+                        <path class="corner2" d="M 65 60 L 70 57 L 70 63 L 65 66"></path>
+                        <path class="line" d="M -36 40 Q -40 44 -36 48 L -4 48 Q 0 44 -4 40"></path>
+                        <image href="images/cmdblock.png" x="21" y="26" height="36px" width="32px"/>
+                    </g>
+
+                    <!-- STEP 3: Patch Binary (Furnace) -->
+                    <g class="step3" id="chunker-step3">
+                        <path class="hex" d="M 37.5 7 L 70 26 L 70 63 L 37.5 82 L 5 63 L 5 26 L 37.5 7"></path>
+                        <path class="shadow" d="M 5 26 L 5 63 L 37.5 82 L 70 63 L 70 57 L 37.5 76 L 10 60 L 10 23"></path>
+                        <path class="highlight" d="M 5 26 L 37.5 7 L 70 26 L 70 63 L 65 66 L 65 29 L 37.5 13 L 5 32"></path>
+                        <path class="corner1" d="M 5 26 L 10 23 L 10 29 L 5 32"></path>
+                        <path class="corner2" d="M 65 60 L 70 57 L 70 63 L 65 66"></path>
+                        <path class="line" d="M -36 40 Q -40 44 -36 48 L -4 48 Q 0 44 -4 40"></path>
+                        <image href="images/furnace.png" x="21" y="25" height="36px" width="32px"/>
+                    </g>
+
+                    <!-- STEP 4: Ready / Download (Dropper) -->
+                    <g class="step4" id="chunker-step4">
+                        <path class="hex" d="M 37.5 7 L 70 26 L 70 63 L 37.5 82 L 5 63 L 5 26 L 37.5 7"></path>
+                        <path class="shadow" d="M 5 26 L 5 63 L 37.5 82 L 70 63 L 70 57 L 37.5 76 L 10 60 L 10 23"></path>
+                        <path class="highlight" d="M 5 26 L 37.5 7 L 70 26 L 70 63 L 65 66 L 65 29 L 37.5 13 L 5 32"></path>
+                        <path class="corner1" d="M 5 26 L 10 23 L 10 29 L 5 32"></path>
+                        <path class="corner2" d="M 65 60 L 70 57 L 70 63 L 65 66"></path>
+                        <path class="line" d="M -36 40 Q -40 44 -36 48 L -4 48 Q 0 44 -4 40"></path>
+                        <image href="images/dropper.png" x="22" y="26" height="36px" width="32px"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Main Column -->
+            <div class="maincol">
+                <div class="topbar">
+                    <h1 id="topbar-title">Select World</h1>
+                    <h2 id="topbar-subtitle">Select your Minecraft Bedrock world folder, archive, or level.dat file.</h2>
+                </div>
+
+                <!-- Status Banner -->
+                <div id="status-notification" class="status_notification"></div>
+
+                <!-- SCREEN 1: SELECT WORLD (BALANCED 2-CARD LAYOUT) -->
+                <div class="main_content select_world" id="screen-select">
+                    <!-- Hidden native file inputs -->
+                    <input type="file" id="file-input" accept=".mcworld,.zip,.dat,level.dat" style="display:none;">
+                    <input type="file" id="folder-input" webkitdirectory directory multiple style="display:none;">
+
+                    <div class="select_world_wrapper">
+                        <!-- Two Symmetrical Minecraft Action Cards -->
+                        <div class="select_world_options">
+                            <!-- Left Card: Select World File -->
+                            <button type="button" class="world_option_card" id="btn-choose-archive">
+                                <div class="card_icon">
+                                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                                    </svg>
+                                </div>
+                                <span class="card_title">Select World File</span>
+                                <span class="card_desc">Supports .mcworld, .zip archive, or raw level.dat</span>
+                                <span class="card_btn">Choose File</span>
+                            </button>
+
+                            <!-- Right Card: Choose World Folder -->
+                            <button type="button" class="world_option_card" id="btn-choose-folder">
+                                <div class="card_icon">
+                                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                                        <line x1="12" y1="11" x2="12" y2="17"></line>
+                                        <line x1="9" y1="14" x2="15" y2="14"></line>
+                                    </svg>
+                                </div>
+                                <span class="card_title">Choose World Folder</span>
+                                <span class="card_desc">Select an uncompressed Bedrock world directory</span>
+                                <span class="card_btn">Choose Folder</span>
+                            </button>
+                        </div>
+
+                        <!-- Dynamic Drag Overlay (Active on Drag Over) -->
+                        <div class="drag_overlay" id="drag-overlay">
+                            <div class="drag_icon_box">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </div>
+                            <span class="drag_title">Drop your worlds here!</span>
+                            <span class="drag_desc">Release to inspect and revive achievement flags</span>
+                            <div class="format_chips">
+                                <span class="format_chip">.mcworld</span>
+                                <span class="format_chip">.zip</span>
+                                <span class="format_chip">level.dat</span>
+                                <span class="format_chip">World Folder</span>
+                            </div>
+                        </div>
+
+                        <!-- Helper Hint & Format Badges -->
+                        <p class="drop_helper_text">Or drag and drop your world file or folder anywhere on this page</p>
+                        <div class="format_chips">
+                            <span class="format_chip">.mcworld</span>
+                            <span class="format_chip">.zip</span>
+                            <span class="format_chip">level.dat</span>
+                            <span class="format_chip">Up to 300 MB</span>
+                            <span class="format_chip">100% Client-Side</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCREEN 2: PROCESSING SCREEN -->
+                <div class="main_content main_content_progress" id="screen-processing" style="display:none;">
+                    <h3>Preparing World: <span id="progress-percentage">0%</span></h3>
+                    <div class="progress_bar animated">
+                        <div class="progress_fill" id="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <p id="processing-text">Please wait while we prepare and patch your world...</p>
+                    <p class="minecraft_joke" id="joke-text">"How does Steve stay in shape? He runs around the block."</p>
+                </div>
+
+                <!-- SCREEN 3: COMPLETION & AUDIT REPORT (AUTHENTIC CHUNKER UI) -->
+                <div class="main_content audit_screen_content" id="screen-complete" style="display:none;">
+                    <div class="audit_wrapper">
+                        <!-- World Summary Box -->
+                        <div class="world_card_header">
+                            <div class="world_card_info">
+                                <div class="world_card_thumb" id="world-thumb">
+                                    <img src="images/bedrock.png" alt="World">
+                                </div>
+                                <div class="world_card_details">
+                                    <h3 id="world-name">WORLD ARCHIVE</h3>
+                                    <p id="world-meta">BEDROCK .MCWORLD ARCHIVE • READY</p>
+                                </div>
+                            </div>
+                            <div class="achievement_status_badge">
+                                Achievements Restored
+                            </div>
+                        </div>
+
+                        <!-- NBT Audit Table Container -->
+                        <div class="audit_table_container">
+                            <div class="audit_table_title">
+                                NBT Tag Inspection & Byte Modification Audit
+                            </div>
+                            <table class="audit_table">
+                                <thead>
+                                    <tr>
+                                        <th>NBT Tag / Description</th>
+                                        <th>Original State</th>
+                                        <th style="width: 36px; text-align: center;"></th>
+                                        <th>Patched State</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="audit-list">
+                                    <!-- Dynamically populated by reviver.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOTTOM ACTION BAR -->
+                <div class="bottombar" id="bottombar" style="display:none;">
+                    <button type="button" class="button red" id="reset-btn">Revive Another World</button>
+                    <button type="button" class="button blue" id="download-alt-btn" style="display:none;">
+                        <span id="download-alt-text">Download as .zip</span>
+                    </button>
+                    <button type="button" class="button green" id="download-btn">
+                        <span id="download-main-text">Download Patched World (.mcworld)</span>
+                    </button>
+                </div>
+
+                <!-- TAB: HOW IT WORKS -->
+                <div class="tab_content_panel" id="tab-how-it-works">
+                    <p>In <strong>Minecraft Bedrock Edition</strong>, toggling cheats or opening a world in Creative mode irreversibly marks tags inside <code>level.dat</code>. This disables Xbox Achievements for that world forever.</p>
+                    
+                    <div class="grid_3col">
+                        <div class="info_card">
+                            <h4>In-Memory Zero-Copy Patching</h4>
+                            <p>Achievement Reviver reads the binary stream directly in your browser using DataView and modifies the exact byte values in place. No re-serialization and zero risk of tag order corruption.</p>
+                        </div>
+                        <div class="info_card">
+                            <h4>level.dat_old Synchronization</h4>
+                            <p>Bedrock keeps a backup <code>level.dat_old</code> file. Both primary and backup files are inspected and patched so the game never rolls back your achievement status.</p>
+                        </div>
+                        <div class="info_card">
+                            <h4>100% Client-Side Privacy</h4>
+                            <p>Your gigabyte-sized world files never leave your computer. All processing happens entirely inside your web browser using WebAssembly and native TypedArrays.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: IMPORT GUIDE -->
+                <div class="tab_content_panel" id="tab-import-guide">
+                    <div class="grid_3col">
+                        <div class="info_card">
+                            <h4>Windows 10 / 11</h4>
+                            <p>Simply double-click the downloaded <code>.mcworld</code> file. Minecraft Bedrock will launch automatically and import the revived world straight into your worlds list.</p>
+                        </div>
+                        <div class="info_card">
+                            <h4>iOS & Android</h4>
+                            <p>Open the downloaded <code>.mcworld</code> in your Files app and choose "Open in Minecraft". The game will open and import your achievements-ready world.</p>
+                        </div>
+                        <div class="info_card">
+                            <h4>Xbox, PlayStation & Switch</h4>
+                            <p>Upload the patched world to a Minecraft Realm from Windows or Mobile. Join that Realm from your console and download the world save locally to keep earning achievements.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: FAQ -->
+                <div class="tab_content_panel" id="tab-faq">
+                    <div class="faq_item">
+                        <div class="faq_question">
+                            Will I get banned on Xbox Live for doing this?
+                            <span class="faq_indicator">+</span>
+                        </div>
+                        <div class="faq_answer">
+                            No. Achievement eligibility is checked purely by the game client via local world NBT flags. This tool restores your world save to standard Survival specifications — no external hacks or memory injectors are used.
+                        </div>
+                    </div>
+
+                    <div class="faq_item">
+                        <div class="faq_question">
+                            Will this affect my builds, inventory, or chunks?
+                            <span class="faq_indicator">+</span>
+                        </div>
+                        <div class="faq_answer">
+                            Not at all. The chunk database (LevelDB), player inventory, entities, and block states remain 100% untouched. Only the 5 specific cheat/gametype tags in <code>level.dat</code> are updated.
+                        </div>
+                    </div>
+
+                    <div class="faq_item">
+                        <div class="faq_question">
+                            What if my world archive is over 100 MB?
+                            <span class="faq_indicator">+</span>
+                        </div>
+                        <div class="faq_answer">
+                            Achievement Reviver easily handles large world archives up to 300+ MB directly in Chrome, Edge, and Firefox thanks to high-speed stream reading and selective ZIP patching.
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /.maincol -->
+        </main>
+    </div><!-- /.wrapper -->
+
+    <!-- Clean Footer with NIVYT Credits -->
+    <footer id="footer">
+        <div class="wrapper">
+            <div class="footer_bottom" style="padding: 24px 0; align-items: center;">
+                <p>
+                    Achievement Reviver — Minecraft Bedrock NBT Achievement Restorer<br>
+                    Created by <strong>NIVYT</strong> &bull; <a href="https://nivyt.pages.dev" target="_blank" rel="noopener noreferrer" style="color: #36b14a; text-decoration: none; font-weight: bold;">nivyt.pages.dev</a><br>
+                    <span class="copy">&copy; Achievement Reviver</span>
+                </p>
+                <span class="build">v1.0</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
