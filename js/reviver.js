@@ -65,7 +65,7 @@ class WorldReviver {
         ];
 
         // Top Header Nav Links
-        this.navLinks = document.querySelectorAll('#header nav ul li a');
+        this.navLinks = document.querySelectorAll('[data-view]');
         this.tabPanels = document.querySelectorAll('.tab_content_panel');
 
         // State
